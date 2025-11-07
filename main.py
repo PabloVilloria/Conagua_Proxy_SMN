@@ -27,9 +27,12 @@ def proxy():
             'Upgrade-Insecure-Requests': '1',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
         }
-        target_url = target_url.replace("_","%")
+        target_url = target_url.replace("BBB","%")
+        print("URL procesada:", target_url)
         target_url = target_url.split("AAA")
-        url_enviar = +target_url[0]+"&"+target_url[1]+"&"+target_url[2]
+        print("URL dividida:", target_url)
+        url_enviar = target_url[0]+"&"+target_url[1]+"&"+target_url[2]
+        print("URL a enviar:", url_enviar)
         resp = requests.get(
             url_enviar,
             headers=headers,
