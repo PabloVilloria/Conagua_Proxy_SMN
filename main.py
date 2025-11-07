@@ -13,7 +13,6 @@ def proxy():
     target_url = request.args.get("url")
     if not target_url:
         return jsonify({"error": "Falta el parámetro 'url'"}), 400
-
     try:
         print("📡 Solicitando:", target_url)
         # timeout en segundos
@@ -29,8 +28,8 @@ def proxy():
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
         }
         target_url = target_url.replace("_","%")
-        target_url = target_url.split("fechaFinal")
-        url_enviar = "https://smn.conagua.gob.mx/tools/GUI/sivea_v3/php/getPrecipitacionAcumulada.php?tipo=rango&"+target_url[0]+"&fechaFinal"+target_url[1]
+        target_url = target_url.split("AAA")
+        url_enviar = +target_url[0]+"&"+target_url[1]+"&"+target_url[2]
         resp = requests.get(
             url_enviar,
             headers=headers,
