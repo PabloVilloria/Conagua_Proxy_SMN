@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "✅ Proxy Python (Flask) funcionando. Usa /proxy?url=<URL>"
+    return "✅ Proxy Python 1.0 (Flask) funcionando. Usa /proxy?url=<URL>"
 
 @app.route('/proxy')
 def proxy():
