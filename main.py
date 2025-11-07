@@ -10,7 +10,9 @@ def home():
 
 @app.route('/proxy')
 def proxy():
+    print("INicio")
     target_url = request.args.get("url")
+    print("URL recibida:", target_url)
     if not target_url:
         return jsonify({"error": "Falta el parámetro 'url'"}), 400
     try:
@@ -42,10 +44,20 @@ def proxy():
         # reenvía el contenido y el content-type
         return Response(resp.text, status=resp.status_code, content_type=resp.headers.get('content-type'))
     except requests.exceptions.Timeout:
-        return jsonify({"error": "Timeout: el servidor tardó demasiado en responder"}), 504
-    except Exception as e:
-        print("❌ Error:", e)
+        print("⏰ Timeout alcanzado en Render")
+        return jsonify({"error": "Timeout: el servidor SMN no respondió a tiempo"}), 504
+
+    except requests.exceptions.SSLError as e:
+        print("❌ Error SSL:", e)
+        return jsonify({"error": "Error SSL en la conexión al servidor SMN"}), 502
+
+    except requests.exceptions.RequestException as e:
+        print("❌ Error general en requests:", e)
         return jsonify({"error": str(e)}), 500
+
+    except Exception as e:
+        print("💥 Error inesperado:", e)
+        return jsonify({"error": f"Error inesperado: {str(e)}"}), 500
 
 if __name__ == '__main__':
     # Solo para desarrollo local; para producción usar gunicorn
